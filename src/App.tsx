@@ -4,8 +4,9 @@ import { queryClient } from '@/lib/query-client'
 import { ThemeProvider } from '@/components/theme-provider'
 import { AuthProvider } from '@/lib/auth'
 import { SupabaseGate } from '@/components/supabase-gate'
-import { ProtectedRoute, PublicOnlyRoute } from '@/components/protected-route'
+import { AdminRoute, ProtectedRoute, PublicOnlyRoute } from '@/components/protected-route'
 import { AppLayout } from '@/components/layout/app-layout'
+import { AdminLayout } from '@/components/layout/admin-layout'
 import { Toaster } from '@/components/ui/sonner'
 
 import LandingPage from '@/pages/landing'
@@ -20,6 +21,7 @@ import ProfilePage from '@/pages/profile'
 import NotificationsPage from '@/pages/notifications'
 import GuidePage from '@/pages/guide'
 import NotFoundPage from '@/pages/not-found'
+import AdminApplicationsPage from '@/pages/admin-applications'
 
 export default function App() {
   return (
@@ -62,6 +64,16 @@ export default function App() {
                   <Route path="profile" element={<ProfilePage />} />
                   <Route path="notifications" element={<NotificationsPage />} />
                   <Route path="guide" element={<GuidePage />} />
+                </Route>
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminRoute>
+                      <AdminLayout />
+                    </AdminRoute>
+                  }
+                >
+                  <Route index element={<AdminApplicationsPage />} />
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>

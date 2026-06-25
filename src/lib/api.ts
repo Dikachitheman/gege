@@ -3,6 +3,7 @@ import { TABLES, VIEWS, RPC } from '@/lib/tables'
 import { shortRef } from '@/lib/utils'
 import type {
   AcademicSession,
+  AdminApplicationDetail,
   Allocation,
   AllocationDetail,
   Application,
@@ -349,6 +350,25 @@ export async function getNotifications(userId: string): Promise<Notification[]> 
 
 export async function markNotificationRead(id: string): Promise<void> {
   await supabase.from(TABLES.notifications).update({ is_read: true }).eq('id', id)
+}
+
+// ---------------------------------------------------------------------------
+// Admin
+// ---------------------------------------------------------------------------
+const ADMIN_APPLICATION_SELECT = `*, profile:${TABLES.profiles}(id,full_name,matric_number,email,gender,faculty,department,level,phone), hostel:${TABLES.hostels}(id,name,code,fee,gender), room:${TABLES.rooms}(id,room_number), bed:${TABLES.bedSpaces}(id,bed_number,position)`
+
+export async function getAdminApplications(): Promise<AdminApplicationDetail[]> {
+  const { data, error } = await supabase
+    .from(TABLES.applications)
+    .select(ADMIN_APPLICATION_SELECT)
+    .order('created_at', { ascending: false })
+  if (error) throw new Error(error.message)
+  return (data as unknown as AdminApplicationDetail[]) ?? []
+}
+
+export async function adminApproveApplication(applicationId: string): Promise<void> {
+  const { error } = await supabase.rpc(RPC.approveApplication, { p_application_id: applicationId })
+  if (error) throw new Error(error.message)
 }
 
 export async function markAllNotificationsRead(userId: string): Promise<void> {
