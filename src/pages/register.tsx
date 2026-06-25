@@ -23,7 +23,7 @@ import {
 const schema = z
   .object({
     full_name: z.string().trim().min(3, 'Enter your full name (at least 3 characters).'),
-    matric_number: z.string().trim().min(3, 'Enter your matric number, e.g. UG/2021/1234.'),
+    matric_number: z.string().trim().min(3, 'Enter your matric number, e.g. DE/2021/1234.'),
     email: z.email('Enter a valid email address, e.g. name@example.com.'),
     gender: z.enum(['female', 'male'], { message: 'Select your gender.' }),
     faculty: z.string().min(1, 'Select your faculty.'),
@@ -125,7 +125,7 @@ export default function RegisterPage() {
               </Field>
 
               <Field label="Matric number" htmlFor="matric_number" required error={errors.matric_number?.message}>
-                <Input id="matric_number" placeholder="UG/2021/1234" aria-invalid={!!errors.matric_number} {...register('matric_number')} />
+                <Input id="matric_number" placeholder="DE/2021/1234" aria-invalid={!!errors.matric_number} {...register('matric_number')} />
               </Field>
 
               <Field label="Phone number" htmlFor="phone" required error={errors.phone?.message}>
