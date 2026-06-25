@@ -10,32 +10,20 @@ function FullScreenLoader() {
   )
 }
 
-/** Requires a signed-in student (non-admin). Redirects admins to /admin. */
+/** Requires a signed-in user. */
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { session, loading, isAdmin } = useAuth()
+  const { session, loading } = useAuth()
   const location = useLocation()
 
   if (loading) return <FullScreenLoader />
   if (!session) return <Navigate to="/login" state={{ from: location }} replace />
-  if (isAdmin) return <Navigate to="/admin" replace />
-  return <>{children}</>
-}
-
-/** Requires a signed-in admin/staff user. */
-export function AdminRoute({ children }: { children: React.ReactNode }) {
-  const { session, loading, isAdmin, isStaff } = useAuth()
-  const location = useLocation()
-
-  if (loading) return <FullScreenLoader />
-  if (!session) return <Navigate to="/login" state={{ from: location }} replace />
-  if (!isAdmin && !isStaff) return <Navigate to="/app" replace />
   return <>{children}</>
 }
 
 /** Redirects already-signed-in users away from auth pages. */
 export function PublicOnlyRoute({ children }: { children: React.ReactNode }) {
-  const { session, loading, isAdmin } = useAuth()
+  const { session, loading } = useAuth()
   if (loading) return <FullScreenLoader />
-  if (session) return <Navigate to={isAdmin ? '/admin' : '/app'} replace />
+  if (session) return <Navigate to="/app" replace />
   return <>{children}</>
 }

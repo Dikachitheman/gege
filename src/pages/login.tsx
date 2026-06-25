@@ -30,17 +30,11 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { email: '', password: '' },
   })
-
-  function fillAdmin() {
-    setValue('email', 'admin@email.com')
-    setValue('password', 'AdminPassword123')
-  }
 
   async function onSubmit(values: FormValues) {
     setFormError(null)
@@ -94,15 +88,6 @@ export default function LoginPage() {
                   <AlertDescription>{formError}</AlertDescription>
                 </Alert>
               )}
-              <button
-                type="button"
-                onClick={fillAdmin}
-                className="mb-4 w-full rounded-lg border border-dashed border-primary/40 bg-primary/5 px-4 py-2.5 text-left text-sm transition-colors hover:bg-primary/10"
-              >
-                <span className="block font-medium text-primary">Sign in as Admin</span>
-                <span className="text-xs text-muted-foreground">admin@email.com · AdminPassword123</span>
-              </button>
-
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
                 <Field label="Email address" htmlFor="email" error={errors.email?.message}>
                   <Input id="email" type="email" placeholder="name@example.com" aria-invalid={!!errors.email} {...register('email')} />

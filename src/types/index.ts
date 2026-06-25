@@ -177,13 +177,6 @@ export interface ApplicationDetail extends Application {
   bed: Pick<BedSpace, 'id' | 'bed_number' | 'position'> | null
 }
 
-/** Admin view — includes the applicant's profile. */
-export interface AdminApplicationDetail extends Application {
-  profile: Pick<Profile, 'id' | 'full_name' | 'matric_number' | 'email' | 'gender' | 'faculty' | 'department' | 'level' | 'phone'> | null
-  hostel: Pick<Hostel, 'id' | 'name' | 'code' | 'fee' | 'gender'> | null
-  room: Pick<Room, 'id' | 'room_number'> | null
-  bed: Pick<BedSpace, 'id' | 'bed_number' | 'position'> | null
-}
 
 export interface AllocationDetail extends Allocation {
   hostel: Pick<Hostel, 'id' | 'name' | 'code'> | null
